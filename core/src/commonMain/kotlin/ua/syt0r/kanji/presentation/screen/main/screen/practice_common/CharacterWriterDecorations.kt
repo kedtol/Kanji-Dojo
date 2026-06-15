@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import ua.syt0r.kanji.presentation.common.resources.icon.ExtraIcons
 import ua.syt0r.kanji.presentation.common.resources.icon.Help
 import ua.syt0r.kanji.presentation.common.theme.snapToBiggerContainerCrossfadeTransitionSpec
+import ua.syt0r.kanji.presentation.common.ui.LongPressIconButton
 import ua.syt0r.kanji.presentation.common.ui.kanji.KanjiBackground
 
 @Composable
@@ -146,12 +147,18 @@ private fun BoxScope.MultiStrokeInputButtons(state: State<CharacterWriterState?>
         if (contentState !is CharacterWriterContent.MultipleStrokeInput.Writing)
             return@AnimatedContent
 
-        IconButton(
+        LongPressIconButton(
             onClick = {
                 contentState.strokes.value = contentState.strokes.value.dropLast(1)
+            },
+            onLongClick = {
+                contentState.strokes.value = emptyList()
             }
         ) {
-            Icon(Icons.AutoMirrored.Filled.Undo, null)
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.Undo,
+                contentDescription = "Undo"
+            )
         }
     }
 }
